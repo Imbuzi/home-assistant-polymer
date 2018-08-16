@@ -97,6 +97,7 @@ class HuiPictureGlanceCard extends NavigateMixin(LocalizeMixin(EventsMixin(Polym
             <template is="dom-repeat" items="[[_computeVisible(_entitiesToggle, hass.states)]]">
               <ha-icon
                 on-click="_callService"
+                on-hold="_openDialog"
                 class$="[[_computeButtonClass(item.entity, hass.states)]]"
                 icon="[[_computeIcon(item, hass.states)]]"
                 title="[[_computeTooltip(item.entity, hass.states)]]"
@@ -132,7 +133,7 @@ class HuiPictureGlanceCard extends NavigateMixin(LocalizeMixin(EventsMixin(Polym
     const toggle = [];
 
     entities.forEach((item) => {
-      if (config.force_dialog || !DOMAINS_TOGGLE.has(computeDomain(item.entity))) {
+      if (config.force_dialog || item.force_dialog || !DOMAINS_TOGGLE.has(computeDomain(item.entity))) {
         dialog.push(item);
       } else {
         toggle.push(item);
